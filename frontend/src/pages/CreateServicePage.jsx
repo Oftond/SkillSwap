@@ -24,6 +24,7 @@ const CreateServicePage = () => {
     }))
   }
 
+  // pages/CreateServicePage.jsx (фрагмент handleSubmit)
   const handleSubmit = async (e) => {
     e.preventDefault()
     
@@ -42,9 +43,16 @@ const CreateServicePage = () => {
     try {
       await servicesAPI.create(formData)
       toast.success('Объявление успешно создано!')
-      navigate('/profile')
+      // Даем время на обновление токена если нужно
+      setTimeout(() => {
+        navigate('/profile')
+      }, 100)
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Ошибка при создании объявления')
+      // Если ошибка 401, не показываем toast, т.к. interceptor уже перенаправит
+      if (error.response?.status !== 401) {
+        toast.error(error.response?.data?.message || 'Ошибка при создании объявления')
+        console.log(error);
+      }
     } finally {
       setLoading(false)
     }

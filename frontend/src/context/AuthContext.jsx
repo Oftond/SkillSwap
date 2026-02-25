@@ -17,26 +17,32 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [token, setToken] = useState(localStorage.getItem('token'))
 
-  useEffect(() => {
-    if (token) {
-      loadUser()
-    } else {
-      setLoading(false)
-    }
-  }, [token])
+  // context/AuthContext.jsx (фрагмент)
+useEffect(() => {
+  if (token) {
+    loadUser()
+  } else {
+    setLoading(false)
+  }
+}, [token])
 
-  const loadUser = async () => {
-    try {
-      const response = await userAPI.getProfile()
-      setUser(response.data.data || response.data)
-    } catch (error) {
-      console.error('Failed to load user:', error)
+const loadUser = async () => {
+  try {
+    const response = await userAPI.getProfile()
+    setUser(response.data.data || response.data)
+  } catch (error) {
+    console.error('Failed to load user:', error)
+    // Проверяем, что это действительно ошибка авторизации
+    if (error.response?.status === 401) {
       localStorage.removeItem('token')
       setToken(null)
-    } finally {
-      setLoading(false)
+      setUser(null)
     }
+    // Не показываем toast для ошибки загрузки профиля при старте
+  } finally {
+    setLoading(false)
   }
+}
 
   const login = async (credentials) => {
     try {

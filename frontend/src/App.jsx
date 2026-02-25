@@ -25,12 +25,22 @@ const PrivateRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" />
 }
 
+// App.jsx (фрагмент)
 function AppContent() {
+  const { isAuthenticated } = useAuth()
+  
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/feed" element={<FeedPage />} />
+        <Route 
+          path="/feed" 
+          element={
+            <PrivateRoute>
+              <FeedPage />
+            </PrivateRoute>
+          } 
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route 
@@ -49,7 +59,14 @@ function AppContent() {
             </PrivateRoute>
           } 
         />
-        <Route path="/service/:id" element={<ServiceDetailPage />} />
+        <Route 
+          path="/service/:id" 
+          element={
+            <PrivateRoute>
+              <ServiceDetailPage />
+            </PrivateRoute>
+          } 
+        />
       </Routes>
     </Layout>
   )
