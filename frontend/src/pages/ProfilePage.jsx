@@ -17,7 +17,6 @@ const ProfilePage = () => {
     fetchUserData()
   }, [])
 
-  // pages/ProfilePage.jsx (фрагмент fetchUserData)
   const fetchUserData = async () => {
     try {
       setLoading(true)
@@ -29,11 +28,8 @@ const ProfilePage = () => {
       setUserServices(servicesRes.data.data || servicesRes.data)
       setTransactions(transactionsRes.data.data || transactionsRes.data)
     } catch (error) {
-      // Не показываем ошибку для 401, т.к. interceptor уже перенаправит
-      if (error.response?.status !== 401) {
-        toast.error('Ошибка загрузки данных профиля')
-        console.error('Error fetching user data:', error)
-      }
+      toast.error('Ошибка загрузки данных профиля')
+      console.error('Error fetching user data:', error)
     } finally {
       setLoading(false)
     }
