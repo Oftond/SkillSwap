@@ -10,6 +10,7 @@ import CreateServicePage from './pages/CreateServicePage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
+import TopUpPage from './pages/TopUpPage'
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth()
@@ -38,6 +39,14 @@ function AppContent() {
           element={
             <PrivateRoute>
               <FeedPage />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/topup" 
+          element={
+            <PrivateRoute>
+              <TopUpPage />
             </PrivateRoute>
           } 
         />

@@ -59,6 +59,14 @@ const Navbar = () => {
                     </span>
                   </div>
                 )}
+                
+                <Link
+                  to="/topup"
+                  className="bg-green-500 text-white px-3 py-1 rounded-full text-sm hover:bg-green-600 transition flex items-center space-x-1"
+                >
+                  <CurrencyDollarIcon className="h-4 w-4" />
+                  <span>Пополнить</span>
+                </Link>
 
                 <button
                   onClick={handleLogout}

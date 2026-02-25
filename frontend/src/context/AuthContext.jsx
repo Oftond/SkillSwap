@@ -98,6 +98,7 @@ const loadUser = async () => {
     login,
     register,
     logout,
+    loadUser,
     isAuthenticated: !!user,
   }
 

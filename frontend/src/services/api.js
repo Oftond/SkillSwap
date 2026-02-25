@@ -45,12 +45,12 @@ export const servicesAPI = {
   purchase: (id) => api.post(`/services/${id}/purchase`),
 }
 
-// API методы для работы с пользователями
 export const userAPI = {
   getProfile: () => api.get('/user/profile'),
   updateProfile: (data) => api.put('/user/profile', data),
   getUserServices: () => api.get('/user/services'),
   getUserTransactions: () => api.get('/user/transactions'),
+  topUpBalance: (data) => api.post('/user/topup', data),
 }
 
 // API методы для авторизации
