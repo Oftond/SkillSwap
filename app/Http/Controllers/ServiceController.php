@@ -92,7 +92,7 @@ class ServiceController extends Controller
     // POST /api/services (Требуется токен)
     public function store(Request $request)
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
         $user = Auth::user();
 
         $request->validate([
