@@ -76,4 +76,31 @@ class UserController extends Controller
                  ->get(['id', 'user_id', 'type', 'amount', 'description', 'service_id', 'created_at'])
         );
     }
+
+    public function topup(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        $user = Auth::user();
+        $amount = $request->input('amount');
+
+        // Начисляем баланс
+        $user->increment('balance', $amount);
+
+        // Создаем запись о транзакции
+        Transaction::create([
+            'user_id' => $user->id,
+            'type' => 'credit',
+            'amount' => $amount,
+            'description' => 'Пополнение баланса (тестовое)',
+            'service_id' => null,
+        ]);
+
+        return response()->json([
+            'message' => 'Баланс успешно пополнен',
+            'new_balance' => $user->balance
+        ]);
+    }
 }

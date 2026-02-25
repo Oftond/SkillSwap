@@ -36,4 +36,13 @@ Route::middleware('auth:api')->group(function () {
         // Покупка
         Route::post('/{id}/purchase', [ServiceController::class, 'purchase']);
     });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/profile', [UserController::class, 'profile']);
+        Route::put('/profile', [UserController::class, 'updateProfile']);
+        Route::get('/services', [UserController::class, 'myServices']);
+        Route::get('/transactions', [UserController::class, 'transactions']);
+        
+        Route::post('/topup', [UserController::class, 'topup']); 
+    });
 });
